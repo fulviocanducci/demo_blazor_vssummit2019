@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "SorteioDevCamp.gRPC";
+
+package Greet;
+
+// The greeting service definition.
+service Register {
+  // Sends a greeting
+  rpc Store (RegisterRequest) returns (RegisterReply) {}
+}
+
+// The request message containing the user's name.
+message RegisterRequest {
+  string name = 1;
+  string email = 2;
+  string company = 3;
+  string role = 4;
+}
+
+// The response message containing the greetings.
+message RegisterReply {
+  string message = 1;
+}
