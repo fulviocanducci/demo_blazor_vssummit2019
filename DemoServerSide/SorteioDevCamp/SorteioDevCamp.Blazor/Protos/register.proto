@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "SorteioDevCamp.gRPC";
+option csharp_namespace = "SorteioDevCamp.Blazor";
 
 package RegisterProto;
 
