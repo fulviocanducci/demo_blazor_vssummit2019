@@ -6,38 +6,47 @@
     <br/>
     Informe um e-mail válido para que eu possa entrar em contato com você após o sorteio, que realizarei na segunda-feira, dia 24/06/2019.</p>
 
-<form>
+<EditForm Model="@model" OnValidSubmit="@SaveRegistration">
+    <h1 style="color: blue">@replyMessage</h1>
+    <div class="form-group">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+    </div>
     <div class="form-group">
         <label for="Name" class="control-label">Nome Completo</label>
-        <input for="Name" class="form-control" @bind="@name" />
+        <InputText id="Name" class="form-control" @bind-Value="@model.Name" />
     </div>
     <div class="form-group">
         <label for="Email" class="control-label">Email</label>
-        <input for="Email" class="form-control" @bind="@email" />
+        <InputText id="Email" class="form-control" @bind-Value="@model.Email" />
     </div>
     <div class="form-group">
         <label for="Company" class="control-label">Empresa</label>
-        <input for="Company" class="form-control" @bind="@company" />
+        <InputText id="Company" class="form-control" @bind-Value="@model.Company" />
     </div>
     <div class="form-group">
         <label for="Role" class="control-label">Cargo</label>
-        <input for="Role" class="form-control" @bind="@role" />
+        <InputText for="Role" class="form-control" @bind-Value="@model.Role" />
     </div>
     <div class="form-group">
-        <button class="btn btn-block btn-info" 
-                @onclick="@(async () => await SaveRegistration())" 
-                data-dismiss="modal">Save</button>
+        <button type="submit">Enviar</button>
     </div>
-</form>
+</EditForm>
 
 @functions {
-    string name;
-    string email;
-    string company;
-    string role;
+    private RegisterModel model = new RegisterModel();
+
+    string replyMessage;
 
     public async Task SaveRegistration()
     {
+        var channel = new Channel("localhost:50051", ChannelCredentials.Insecure);
+        var client = new Register.RegisterClient(channel);
 
+        var reply = await client.StoreAsync(new RegisterRequest() { Name = model.Name, Email = model.Email, Company = model.Company, Role = model.Role });
+
+        replyMessage = reply.Message;
+
+        await channel.ShutdownAsync();
     }
 }

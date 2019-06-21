@@ -1,7 +1,5 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "SorteioDevCamp.gRPC";
-
 package RegisterProto;
 
 // The greeting service definition.

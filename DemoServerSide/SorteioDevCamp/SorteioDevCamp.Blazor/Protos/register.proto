@@ -1,7 +1,5 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "SorteioDevCamp.Blazor";
-
 package RegisterProto;
 
 // The greeting service definition.
